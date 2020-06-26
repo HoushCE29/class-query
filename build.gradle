@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // TODO remove
+    compile files('lib/ducky.jar')
+    testImplementation 'junit:junit:4.12'
+}
+
+// TODO make java lib
+application {
+    mainClassName = 'dev.houshce29.classquery.Sandbox'
+}
