@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 /**
  * Common abstraction to fire a query at any point.
  */
-public abstract class ExecutableClassQueryComponent {
+public abstract class ExecutableComponent {
     private final ClassQuery query;
 
-    ExecutableClassQueryComponent(ClassQuery query) {
+    ExecutableComponent(ClassQuery query) {
         this.query = query;
     }
 

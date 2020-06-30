@@ -7,8 +7,8 @@ public class Select {
         this.query = query;
     }
 
-    public From from(String apackage, String... morePackages) {
-        query.from(apackage);
+    public From from(String javaPackage, String... morePackages) {
+        query.from(javaPackage);
         query.from(morePackages);
         return new From(query);
     }

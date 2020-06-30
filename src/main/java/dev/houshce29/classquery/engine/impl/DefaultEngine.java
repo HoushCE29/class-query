@@ -33,27 +33,27 @@ public class DefaultEngine implements Engine {
     @Override
     public Set<Class> go(ClassQuery query) {
         Set<Class> classes = new HashSet<>();
-        Predicate<Class> filters = query.getFilters();
         for (String javaPackage : query.getPackages()) {
-            classes.addAll(tryQueryPackage(javaPackage, filters));
+            classes.addAll(tryQueryPackage(javaPackage, query.getSelect(), query.getFilters()));
         }
         return classes;
     }
 
-    private Set<Class> tryQueryPackage(String javaPackage, Predicate<Class> filters) {
+    private Set<Class> tryQueryPackage(String javaPackage, Predicate<Class> select, Predicate<Class> filters) {
         try {
-            return queryPackage(javaPackage, filters);
+            return queryPackage(javaPackage, select, filters);
         }
         catch (IOException ex) {
             return Collections.emptySet();
         }
     }
 
-    private Set<Class> queryPackage(String javaPackage, Predicate<Class> filters) throws IOException {
+    private Set<Class> queryPackage(String javaPackage, Predicate<Class> select, Predicate<Class> filters) throws IOException {
         Enumeration<URL> topLevelPackages = loader.getResources(toUrl(javaPackage));
         Set<Class> classes = new HashSet<>();
         while (topLevelPackages.hasMoreElements()) {
             queryResource(topLevelPackages.nextElement(), javaPackage)
+                    .filter(select)
                     .filter(filters)
                     .forEach(classes::add);
         }
