@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
+/**
+ * Main class for starting a query for classes.
+ */
 public class ClassQuery {
     private final Set<String> packages = new HashSet<>();
     private Predicate<Class> select;
@@ -41,14 +44,20 @@ public class ClassQuery {
         filters = filters.and(andFilter);
     }
 
-    void or(Predicate<Class> orFilter) {
-        filters = filters.or(orFilter);
-    }
-
+    /**
+     * Starts a query. This will select all class types.
+     * @return An intermediate select object.
+     */
     public static Select select() {
         return select(Selection.ALL);
     }
 
+    /**
+     * Starts a query. This will select specific class types.
+     * @param select Initial class type selection.
+     * @param moreSelections Zero or more additional class type selections.
+     * @return An intermediate select object.
+     */
     public static Select select(Selection select, Selection... moreSelections) {
         ClassQuery query = new ClassQuery();
         Set<Selection> selections = new HashSet<>(Arrays.asList(moreSelections));

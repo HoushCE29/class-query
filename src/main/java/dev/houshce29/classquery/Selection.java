@@ -26,7 +26,7 @@ public enum Selection {
     /**
      * Selects interfaces (anything with the <pre>interface</pre> keyword).
      */
-    INTERFACES(Class::isInterface),
+    INTERFACES(c -> c.isInterface() && !c.isAnnotation()),
 
     /**
      * Selects annotations (anything with the <pre>@interface</pre> keyword).
@@ -36,7 +36,7 @@ public enum Selection {
     /**
      * Selects enums (anything with the <pre>enum</pre> keyword).
      */
-    ENUMS(Class::isAnnotation);
+    ENUMS(Class::isEnum);
 
     private static final Set<Selection> EFFECTIVELY_ALL = Util.immutableSet(CLASSES, INTERFACES, ANNOTATIONS, ENUMS);
     private final Predicate<Class> filter;

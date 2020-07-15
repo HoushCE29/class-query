@@ -1,4 +1,4 @@
-package dev.houshce29.classquery.engine.extract;
+package dev.houshce29.classquery.engine.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,12 +16,12 @@ import java.util.zip.ZipFile;
 /**
  * Extractor that extracts from a ZIP-based filesystem (e.g. zips and jars).
  */
-public class ZipBasedExtractor extends AbstractExtractor {
+public class ZippedClassExtractor extends AbstractExtractor {
     private static final String FILE_PROTOCOL = "file:";
     private static final String JAR_SEPARATOR = ".jar!/";
     private static final String ZIP_SEPARATOR = ".zip!/";
 
-    public ZipBasedExtractor(ClassLoader loader) {
+    public ZippedClassExtractor(ClassLoader loader) {
         super(loader);
     }
 

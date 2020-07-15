@@ -2,9 +2,6 @@ package dev.houshce29.classquery.engine.impl;
 
 import dev.houshce29.classquery.ClassQuery;
 import dev.houshce29.classquery.engine.Engine;
-import dev.houshce29.classquery.engine.extract.Extractor;
-import dev.houshce29.classquery.engine.extract.SimpleExtractor;
-import dev.houshce29.classquery.engine.extract.ZipBasedExtractor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +24,7 @@ public class DefaultEngine implements Engine {
     public DefaultEngine(ClassLoader loader) {
         this.loader = loader;
         this.extractors = Arrays.asList(
-                new ZipBasedExtractor(loader), new SimpleExtractor(loader));
+                new ZippedClassExtractor(loader), new StandardClassExtractor(loader));
     }
 
     @Override

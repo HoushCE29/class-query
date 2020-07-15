@@ -1,4 +1,4 @@
-package dev.houshce29.classquery.engine.extract;
+package dev.houshce29.classquery.engine.impl;
 
 import dev.houshce29.classquery.internal.Util;
 
@@ -11,9 +11,9 @@ import java.util.Set;
 /**
  * Extractor that simply extracts from the local filesystem.
  */
-public class SimpleExtractor extends AbstractExtractor {
+public class StandardClassExtractor extends AbstractExtractor {
 
-    public SimpleExtractor(ClassLoader loader) {
+    public StandardClassExtractor(ClassLoader loader) {
         super(loader);
     }
 
@@ -31,7 +31,10 @@ public class SimpleExtractor extends AbstractExtractor {
     @Override
     public Set<Class> extract(URL url, String basePackage) {
         try {
-            return scan(new File(url.toURI()), basePackage);
+            // Remove the last segment in the package to avoid duplicated path!
+            // Otherwise, this would cause: com.mycomp.target.target to occur, which may not exist!
+            String peeledBasePackage = basePackage.substring(0, basePackage.lastIndexOf(PACKAGE_SEPARATOR));
+            return scan(new File(url.toURI()), peeledBasePackage);
         }
         catch (URISyntaxException ex) {
             return new HashSet<>();
