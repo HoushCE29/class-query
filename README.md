@@ -6,6 +6,10 @@ To build this project, simply run:
 ```
 gradlew clean build
 ```
+Additionally, to publish locally, run:
+```
+gradlew publishToMavenLocal
+```
 
 ## Example
 The general set-up of this library is to look similar to SQL while maintaining Java 8+ capabilities:
