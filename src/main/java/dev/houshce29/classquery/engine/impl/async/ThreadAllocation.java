@@ -48,7 +48,7 @@ final class ThreadAllocation {
         // Try to allocate a spot
         if (obtain) {
             // If available room, increment
-            if (usedThreadCount <= maxThreadCount) {
+            if (usedThreadCount < maxThreadCount) {
                 usedThreadCount++;
                 return true;
             }
