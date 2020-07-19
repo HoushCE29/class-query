@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 repositories {
@@ -8,4 +9,29 @@ repositories {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
+}
+
+ext {
+    release = '1.0-SNAPSHOT'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/houshce29/class-query")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            groupId = 'dev.houshce29'
+            artifactId = 'class-query'
+            version = "${release}"
+            from components.java
+        }
+    }
 }
