@@ -2,10 +2,10 @@ package dev.houshce29.classquery.engine.impl;
 
 import dev.houshce29.classquery.ClassQuery;
 import dev.houshce29.classquery.engine.Engine;
+import dev.houshce29.classquery.engine.EngineFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -23,8 +23,7 @@ public class DefaultEngine implements Engine {
 
     public DefaultEngine(ClassLoader loader) {
         this.loader = loader;
-        this.extractors = Arrays.asList(
-                new ZippedClassExtractor(loader), new StandardClassExtractor(loader));
+        this.extractors = EngineFactory.extractors(this.loader);
     }
 
     @Override

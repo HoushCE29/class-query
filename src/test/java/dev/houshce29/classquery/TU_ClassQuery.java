@@ -1,5 +1,6 @@
 package dev.houshce29.classquery;
 
+import dev.houshce29.classquery.engine.EngineFactory;
 import dev.houshce29.classquery.testenv.Annotation;
 import dev.houshce29.classquery.testenv.Enum;
 import dev.houshce29.classquery.testenv.Interface;
@@ -73,10 +74,20 @@ public class TU_ClassQuery {
     public void testQueryWithWhereClause() {
         Set<Class> result = ClassQuery.select(Selection.CLASSES)
                 .from(PACKAGE)
-                // Filter one: class has annotation and is NOT an impl
                 .where(clazz -> clazz.getAnnotation(Annotation.class) != null)
                 .and(clazz -> clazz.getInterfaces().length == 0)
                 .execute();
+
+        assertContainsOnly(result, AnnotatedClass.class);
+    }
+
+    @Test
+    public void testQueryWithParallelEngine() {
+        Set<Class> result = ClassQuery.select(Selection.CLASSES)
+                .from(PACKAGE)
+                .where(clazz -> clazz.getAnnotation(Annotation.class) != null)
+                .and(clazz -> clazz.getInterfaces().length == 0)
+                .execute(EngineFactory.parallelEngine(4));
 
         assertContainsOnly(result, AnnotatedClass.class);
     }
